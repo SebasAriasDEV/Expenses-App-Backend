@@ -37,14 +37,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
 const db = __importStar(require("../database/config.db"));
 class Server {
     constructor() {
         this.usersPath = "/api/users";
         this.app = (0, express_1.default)();
-        this.port = 8000;
+        this.port = process.env.PORT;
         //Start server functions
         this.connectDB();
+        this.middlewares();
         this.routes();
         this.listen();
     }
@@ -57,6 +59,12 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             yield db.dbConnection();
         });
+    }
+    //Middlewares
+    middlewares() {
+        this.app.use((0, cors_1.default)());
+        this.app.use(express_1.default.json());
+        this.app.use(express_1.default.static("public"));
     }
     //Routes
     routes() {
