@@ -40,9 +40,12 @@ const express_1 = __importDefault(require("express"));
 const db = __importStar(require("../database/config.db"));
 class Server {
     constructor() {
+        this.usersPath = "/api/users";
         this.app = (0, express_1.default)();
         this.port = 8000;
+        //Start server functions
         this.connectDB();
+        this.routes();
         this.listen();
     }
     //Listen
@@ -54,6 +57,10 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             yield db.dbConnection();
         });
+    }
+    //Routes
+    routes() {
+        this.app.use(this.usersPath, require("../routes/users.routes"));
     }
 }
 exports.Server = Server;
