@@ -8,10 +8,13 @@ import {
   usersUpdate,
 } from "../controllers/users.controller";
 import { validateFields } from "../middlewares/validate_fields";
+import { validateJWT } from "../middlewares/validate_jwt";
 
 const router = Router();
 
-router.get("/", usersGet);
+router.get("/",[
+  validateJWT
+], usersGet);
 
 router.post(
   "/",

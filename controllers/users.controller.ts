@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
 import { userModel as User } from "../models/users.model";
+import { generateJWT } from "../helpers/generate_jwt";
 
 const usersGet = async (req: Request, res: Response) => {
   const resp = await Promise.all([User.countDocuments(), User.find()]);
@@ -22,12 +23,16 @@ const usersPost = async (req: Request, res: Response) => {
   const salt = bcrypt.genSaltSync();
   user.password = bcrypt.hashSync(password, salt);
 
+  //Generate Token
+  const token = await generateJWT(user.id);
+
   //Save in DB
   await user.save();
 
   res.status(200).json({
     msg: "User was successfully created",
     user,
+    token
   });
 };
 
