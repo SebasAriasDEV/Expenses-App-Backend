@@ -1,18 +1,21 @@
 import express from "express";
+import cors from "cors";
+
 import * as db from "../database/config.db";
 
 class Server {
   app: any;
-  port: number;
+  port: string;
 
   usersPath = "/api/users";
 
   constructor() {
     this.app = express();
-    this.port = 8000;
+    this.port = process.env.PORT;
 
     //Start server functions
     this.connectDB();
+    this.middlewares();
     this.routes();
     this.listen();
   }
@@ -25,6 +28,13 @@ class Server {
   //DB connection
   async connectDB() {
     await db.dbConnection();
+  }
+
+  //Middlewares
+  middlewares() {
+    this.app.use(cors());
+    this.app.use(express.json());
+    this.app.use(express.static("public"));
   }
 
   //Routes
