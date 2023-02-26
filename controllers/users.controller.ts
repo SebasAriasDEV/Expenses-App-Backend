@@ -26,5 +26,29 @@ const usersPost = async (req: Request, res: Response) => {
   });
 };
 
+const usersDelete = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  //Delete user
+  const deletedUser = await User.findByIdAndDelete(id);
+
+  res.status(200).json({
+    msg: `User with id: ${id} was deleted successfully`,
+    deletedUser,
+  });
+};
+
+const usersUpdate = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { password, ...rest } = req.body;
+
+  const user = await User.findByIdAndUpdate(id, rest);
+
+  res.status(200).json({
+    msg: `User with id: ${id} has been updated`,
+    user,
+  });
+};
+
 //Exports
-export { usersGet, usersPost };
+export { usersGet, usersPost, usersDelete, usersUpdate };
