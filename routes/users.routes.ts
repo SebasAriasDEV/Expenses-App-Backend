@@ -18,7 +18,7 @@ router.post(
   [
     check("firstName", "First name is mandatory").notEmpty(),
     check("lastName", "Last name is mandatory").notEmpty(),
-    check("password", "Password is mandatory").notEmpty().isLength({ min: 6 }),
+    check("password", "Password must have at least 6 characters").notEmpty().isLength({ min: 6 }),
     validateFields,
   ],
   usersPost
