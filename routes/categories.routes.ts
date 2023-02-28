@@ -33,11 +33,12 @@ router.delete(
       "id",
       "Parameter id is mandatory and need to be a valid mongo id"
     ).isMongoId(),
+    validateFields,
   ],
   deleteCategory
 );
 
-//********** DELETE - DELETE A CATEGORY */
+//********** UPDATE - UPDATE A CATEGORY */
 router.put(
   "/:id",
   [
@@ -45,6 +46,7 @@ router.put(
       "id",
       "Parameter id is mandatory and need to be a valid mongo id"
     ).isMongoId(),
+    validateFields
   ],
   updateCategory
 );

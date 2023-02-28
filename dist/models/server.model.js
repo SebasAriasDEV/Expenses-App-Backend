@@ -43,6 +43,7 @@ class Server {
     constructor() {
         this.usersPath = "/api/users";
         this.categoriesPath = "/api/categories";
+        this.accountsPath = "/api/accounts";
         this.app = (0, express_1.default)();
         this.port = process.env.PORT;
         //Start server functions
@@ -71,6 +72,7 @@ class Server {
     routes() {
         this.app.use(this.usersPath, require("../routes/users.routes"));
         this.app.use(this.categoriesPath, require("../routes/categories.routes"));
+        this.app.use(this.accountsPath, require("../routes/accounts.routes"));
     }
 }
 exports.Server = Server;

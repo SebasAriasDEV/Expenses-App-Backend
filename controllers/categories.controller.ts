@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { categoryModel as Category } from "../models/category.model";
 
 //********** GET - GET ALL CATEGORIES */
-
 const getAllCategories = async (req: Request, res: Response) => {
   const resp = await Promise.all([Category.countDocuments(), Category.find()]);
   const users = await Category.find();
@@ -40,7 +39,7 @@ const deleteCategory = async (req: Request, res: Response) => {
   });
 };
 
-//********** DELETE - DELETE A CATEGORY */
+//********** UPDATE - UPDATE A CATEGORY */
 const updateCategory = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, monthlyBudget } = req.body;
