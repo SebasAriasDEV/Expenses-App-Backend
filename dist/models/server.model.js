@@ -42,6 +42,7 @@ const db = __importStar(require("../database/config.db"));
 class Server {
     constructor() {
         this.usersPath = "/api/users";
+        this.categoriesPath = "/api/categories";
         this.app = (0, express_1.default)();
         this.port = process.env.PORT;
         //Start server functions
@@ -69,6 +70,7 @@ class Server {
     //Routes
     routes() {
         this.app.use(this.usersPath, require("../routes/users.routes"));
+        this.app.use(this.categoriesPath, require("../routes/categories.routes"));
     }
 }
 exports.Server = Server;

@@ -8,6 +8,7 @@ class Server {
   port: string;
 
   usersPath = "/api/users";
+  categoriesPath = "/api/categories";
 
   constructor() {
     this.app = express();
@@ -40,6 +41,7 @@ class Server {
   //Routes
   routes() {
     this.app.use(this.usersPath, require("../routes/users.routes"));
+    this.app.use(this.categoriesPath, require("../routes/categories.routes"));
   }
 }
 
