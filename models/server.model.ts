@@ -10,6 +10,7 @@ class Server {
   usersPath = "/api/users";
   categoriesPath = "/api/categories";
   accountsPath = "/api/accounts";
+  transactionsPath = "/api/transactions";
 
   constructor() {
     this.app = express();
@@ -44,6 +45,7 @@ class Server {
     this.app.use(this.usersPath, require("../routes/users.routes"));
     this.app.use(this.categoriesPath, require("../routes/categories.routes"));
     this.app.use(this.accountsPath, require("../routes/accounts.routes"));
+    this.app.use(this.transactionsPath, require("../routes/transactions.routes"));
   }
 }
 

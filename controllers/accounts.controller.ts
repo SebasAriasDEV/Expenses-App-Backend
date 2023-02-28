@@ -41,7 +41,6 @@ const deleteAccount = async (req: Request, res: Response) => {
 //********** UPDATE - UPDATE AN ACCOUNT */
 const updateAccount = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { name, type, currency } = req.body;
 
   const account = await Account.findByIdAndUpdate(id, req.body);
 
