@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { userModel as User } from "../models/users.model";
 import { generateJWT } from "../helpers/generate_jwt";
 
+//********** GET - GET ALL USERS */
 const usersGet = async (req: Request, res: Response) => {
   const resp = await Promise.all([User.countDocuments(), User.find()]);
 
@@ -13,6 +14,7 @@ const usersGet = async (req: Request, res: Response) => {
   });
 };
 
+//********** POST - CREATE AN USER */
 const usersPost = async (req: Request, res: Response) => {
   const { firstName, lastName, password } = req.body;
 
@@ -36,6 +38,7 @@ const usersPost = async (req: Request, res: Response) => {
   });
 };
 
+//********** DELETE - DELETE AN USER */
 const usersDelete = async (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -48,6 +51,7 @@ const usersDelete = async (req: Request, res: Response) => {
   });
 };
 
+//********** PUT - UPDATE AN USER */
 const usersUpdate = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { password, ...rest } = req.body;

@@ -1,9 +1,19 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createTransaction } from "../controllers/transactions.controller";
+import {
+  createTransaction,
+  deleteTransaction,
+  getAllTransactions,
+  updateTransaction,
+} from "../controllers/transactions.controller";
+import { validateFields } from "../middlewares/validate_fields";
 
 const router = Router();
 
+//********** GET - GET ALL TRANSACTIONS */
+router.get("/", [], getAllTransactions);
+
+//********** POST - CREATE A NEW TRANSACTION */
 router.post(
   "/",
   [
@@ -16,6 +26,26 @@ router.post(
   ],
   createTransaction
 );
+
+//********** DELETE - DELETE A TRANSACTION */
+router.delete(
+  "/:id",
+  [
+    check("id", "ID to delete is mandatory and mongo ID").isMongoId(),
+    validateFields,
+  ],
+  deleteTransaction
+);
+//********** PUT - UPDATE A TRANSACTION */
+router.put(
+  "/:id",
+  [
+    check("id", "ID to update is mandatory and mongo ID").isMongoId(),
+    validateFields,
+  ],
+  updateTransaction
+);
+
 
 //Exports
 module.exports = router;
