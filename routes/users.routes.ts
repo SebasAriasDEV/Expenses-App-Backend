@@ -19,6 +19,7 @@ router.get("/",[
 router.post(
   "/",
   [
+    validateJWT,
     check("firstName", "First name is mandatory").notEmpty(),
     check("lastName", "Last name is mandatory").notEmpty(),
     check("password", "Password must have at least 6 characters").notEmpty().isLength({ min: 6 }),
@@ -30,6 +31,7 @@ router.post(
 router.delete(
   "/:id",
   [
+    validateJWT,
     check("id", "User id must be provided as valid Mongo id").isMongoId(),
     validateFields,
   ],
@@ -39,6 +41,7 @@ router.delete(
 router.put(
   "/:id",
   [
+    validateJWT,
     check("id", "User id must be provided as valid Mongo id").isMongoId(),
     validateFields,
   ],
