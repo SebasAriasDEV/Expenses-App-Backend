@@ -7,15 +7,14 @@ import {
   getAllCategories,
   updateCategory,
 } from "../controllers/categories.controller";
+import { validateCategoryIdExists } from "../helpers/db_validators";
 import { validateFields } from "../middlewares/validate_fields";
 import { validateJWT } from "../middlewares/validate_jwt";
 
 const router = Router();
 
 //********** GET - RETRIEVE AL CATEGORIES */
-router.get("/", [
-  validateJWT,
-], getAllCategories);
+router.get("/", [validateJWT], getAllCategories);
 
 //********** POST - CREATE A NEW CATEGORY */
 router.post(
@@ -38,6 +37,7 @@ router.delete(
       "id",
       "Parameter id is mandatory and need to be a valid mongo id"
     ).isMongoId(),
+    check("id").custom(validateCategoryIdExists),
     validateFields,
   ],
   deleteCategory
@@ -52,7 +52,8 @@ router.put(
       "id",
       "Parameter id is mandatory and need to be a valid mongo id"
     ).isMongoId(),
-    validateFields
+    check("id").custom(validateCategoryIdExists),
+    validateFields,
   ],
   updateCategory
 );

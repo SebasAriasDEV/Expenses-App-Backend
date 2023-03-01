@@ -6,15 +6,14 @@ import {
   getAllTransactions,
   updateTransaction,
 } from "../controllers/transactions.controller";
+import { validateTransactionIdExists } from "../helpers/db_validators";
 import { validateFields } from "../middlewares/validate_fields";
 import { validateJWT } from "../middlewares/validate_jwt";
 
 const router = Router();
 
 //********** GET - GET ALL TRANSACTIONS */
-router.get("/", [
-  validateJWT,
-], getAllTransactions);
+router.get("/", [validateJWT], getAllTransactions);
 
 //********** POST - CREATE A NEW TRANSACTION */
 router.post(
@@ -37,6 +36,7 @@ router.delete(
   [
     validateJWT,
     check("id", "ID to delete is mandatory and mongo ID").isMongoId(),
+    check("id").custom(validateTransactionIdExists),
     validateFields,
   ],
   deleteTransaction
@@ -47,11 +47,11 @@ router.put(
   [
     validateJWT,
     check("id", "ID to update is mandatory and mongo ID").isMongoId(),
+    check("id").custom(validateTransactionIdExists),
     validateFields,
   ],
   updateTransaction
 );
-
 
 //Exports
 module.exports = router;

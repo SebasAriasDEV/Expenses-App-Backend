@@ -7,6 +7,7 @@ import {
   getAllAccounts,
   updateAccount,
 } from "../controllers/accounts.controller";
+import { validateAccountIdExists } from "../helpers/db_validators";
 import { validateFields } from "../middlewares/validate_fields";
 import { validateJWT } from "../middlewares/validate_jwt";
 
@@ -34,6 +35,7 @@ router.delete(
   [
     validateJWT,
     check("id", "Id of account is required").notEmpty(),
+    check("id").custom(validateAccountIdExists),
     validateFields,
   ],
   deleteAccount
@@ -45,6 +47,7 @@ router.put(
   [
     validateJWT,
     check("id", "Id is required for deletion").isMongoId(),
+    check("id").custom(validateAccountIdExists),
     validateFields,
   ],
   updateAccount
