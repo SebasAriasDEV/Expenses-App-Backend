@@ -18,6 +18,11 @@ const categorySchema = new Schema({
     type: Number,
     required: [true, "Year is required"],
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "User is required"],
+  },
 });
 
 categorySchema.methods.toJSON = function () {

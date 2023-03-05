@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ICustomRequest } from "../config/definitions";
 import { categoryModel as Category } from "../models/category.model";
 
 //********** GET - GET ALL CATEGORIES */
@@ -16,7 +17,10 @@ const getAllCategories = async (req: Request, res: Response) => {
 const createCategory = async (req: Request, res: Response) => {
   const { name, monthlyBudget, month, year } = req.body;
 
-  const newCategory = new Category({ name, monthlyBudget, month, year });
+  //Get authenticated user
+  const authID = (req as ICustomRequest).authenticatedUser.id;
+
+  const newCategory = new Category({ name, monthlyBudget, month, year, user: authID });
 
   //Create category in Mongo
   await newCategory.save();
