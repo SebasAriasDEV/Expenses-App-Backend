@@ -10,6 +10,14 @@ const categorySchema = new Schema({
     default: 0,
     required: [true, "Monthly budget is required"],
   },
+  month: {
+    type: Number,
+    required: [true, "Month is required"],
+  },
+  year: {
+    type: Number,
+    required: [true, "Year is required"],
+  },
 });
 
 categorySchema.methods.toJSON = function () {

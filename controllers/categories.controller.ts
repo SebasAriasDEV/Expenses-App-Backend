@@ -14,9 +14,9 @@ const getAllCategories = async (req: Request, res: Response) => {
 
 //********** POST - CREATE A NEW CATEGORY */
 const createCategory = async (req: Request, res: Response) => {
-  const { name, monthlyBudget } = req.body;
+  const { name, monthlyBudget, month, year } = req.body;
 
-  const newCategory = new Category({ name, monthlyBudget });
+  const newCategory = new Category({ name, monthlyBudget, month, year });
 
   //Create category in Mongo
   await newCategory.save();

@@ -23,6 +23,8 @@ router.post(
     validateJWT,
     check("name", "Category name is mandatory").notEmpty(),
     check("monthlyBudget", "Category monthly budget is mandatory").notEmpty(),
+    check("month", "Month is mandatory").notEmpty(),
+    check("year", "Year is mandatory").notEmpty(),
     validateFields,
   ],
   createCategory
