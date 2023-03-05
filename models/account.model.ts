@@ -17,6 +17,11 @@ const accountSchema = new Schema({
     type: Number,
     default: 0,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "User is required"],
+  },
 });
 
 accountSchema.methods.toJSON = function () {

@@ -1,10 +1,17 @@
 import { Request, Response } from "express";
+import { ICustomRequest } from "../config/definitions";
 
 import { accountModel as Account } from "../models/account.model";
 
-//********** GET - GET ALL ACCOUNTS */
+//********** GET - GET ALL ACCOUNTS OF AUTHENTICATED USER */
 const getAllAccounts = async (req: Request, res: Response) => {
-  const resp = await Promise.all([Account.countDocuments(), Account.find()]);
+  //Find the authenticated user
+  const authID = (req as ICustomRequest).authenticatedUser.id;
+
+  const resp = await Promise.all([
+    Account.countDocuments({ user: authID }),
+    Account.find({ user: authID }).sort({ balance: -1 }),
+  ]);
 
   res.status(200).json({
     total: resp[0],
@@ -16,7 +23,10 @@ const getAllAccounts = async (req: Request, res: Response) => {
 const createAccount = async (req: Request, res: Response) => {
   const { name, type, currency, balance } = req.body;
 
-  const account = new Account({ name, type, currency, balance });
+  //Get the authenticated user ID
+  const userID = (req as ICustomRequest).authenticatedUser.id;
+
+  const account = new Account({ name, type, currency, balance, user: userID });
 
   await account.save();
 

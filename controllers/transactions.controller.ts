@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
+import { ICustomRequest } from "../config/definitions";
 
 import { transactionModel as Transaction } from "../models/transaction.model";
+import { accountModel as Account } from "../models/account.model";
 
 //********** GET - GET ALL TRANSACTIONS */
 const getAllTransactions = async (req: Request, res: Response) => {
@@ -22,22 +24,28 @@ const createTransaction = async (req: Request, res: Response) => {
     amount,
     date = new Date(),
     description,
-    //TODO: El user ID debe venir del request luego de validar el JWT
-    user,
     account,
     category,
   } = req.body;
 
+  //Create transaction to be saves
   const transaction = new Transaction({
     transactionType,
     amount,
     date,
     description,
-    user,
+    user: (req as ICustomRequest).authenticatedUser.id,
     account,
     category,
   });
 
+  //Update account balance with new transaction
+  //TODO: Validar que el account/category que vienen por parametro existan
+  const currentAccount = await Account.findById(account);
+  const newBalance = currentAccount!.balance + amount;
+  await Account.findByIdAndUpdate(account, { balance: newBalance });
+
+  //Save new transaction
   await transaction.save();
 
   res.status(200).json({
@@ -50,6 +58,16 @@ const createTransaction = async (req: Request, res: Response) => {
 const deleteTransaction = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  //Update account balance
+  const transactionToDelete = await Transaction.findById(id);
+  const currentAccount = await Account.findById(transactionToDelete!.account);
+
+  const newBalance = currentAccount!.balance - transactionToDelete!.amount;
+  await Account.findByIdAndUpdate(transactionToDelete!.account, {
+    balance: newBalance,
+  });
+
+  //Delete transaction
   const deletedTransaction = await Transaction.findByIdAndDelete(id);
 
   res.status(200).json({
@@ -62,6 +80,8 @@ const deleteTransaction = async (req: Request, res: Response) => {
 const updateTransaction = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  //TODO: Update account balance on amount updated. Or if the account is updated.
+
   const transaction = await Transaction.findByIdAndUpdate(id, req.body);
 
   res.status(200).json({
@@ -71,4 +91,9 @@ const updateTransaction = async (req: Request, res: Response) => {
 };
 
 //Exports
-export { createTransaction, getAllTransactions, deleteTransaction, updateTransaction };
+export {
+  createTransaction,
+  getAllTransactions,
+  deleteTransaction,
+  updateTransaction,
+};
