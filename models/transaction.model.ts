@@ -17,6 +17,14 @@ const transactionSchema = new Schema({
     type: String,
     required: [true, "Transaction description is required"],
   },
+  month: {
+    type: Number,
+    required: [true, "Month is required"],
+  },
+  year: {
+    type: Number,
+    required: [true, "Year is required"],
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

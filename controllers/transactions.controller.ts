@@ -29,6 +29,8 @@ const createTransaction = async (req: Request, res: Response) => {
     description,
     account,
     category,
+    month,
+    year,
   } = req.body;
 
   //Create transaction to be saves
@@ -37,6 +39,8 @@ const createTransaction = async (req: Request, res: Response) => {
     amount,
     date,
     description,
+    month,
+    year,
     user: (req as ICustomRequest).authenticatedUser.id,
     account,
     category,
