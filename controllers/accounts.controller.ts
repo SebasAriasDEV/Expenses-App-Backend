@@ -14,9 +14,9 @@ const getAllAccounts = async (req: Request, res: Response) => {
 
 //********** POST - CREATE A NEW ACCOUNT */
 const createAccount = async (req: Request, res: Response) => {
-  const { name, type, currency } = req.body;
+  const { name, type, currency, balance } = req.body;
 
-  const account = new Account({ name, type, currency });
+  const account = new Account({ name, type, currency, balance });
 
   await account.save();
 

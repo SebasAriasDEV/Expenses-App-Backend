@@ -13,6 +13,10 @@ const accountSchema = new Schema({
     type: String,
     required: [true, "Account name is required"],
   },
+  balance: {
+    type: Number,
+    default: 0,
+  },
 });
 
 accountSchema.methods.toJSON = function () {
