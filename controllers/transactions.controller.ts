@@ -11,7 +11,7 @@ const getAllTransactions = async (req: Request, res: Response) => {
 
   const resp = await Promise.all([
     Transaction.countDocuments({ user: authID }),
-    Transaction.find({ user: authID }),
+    Transaction.find({ user: authID }).sort({ date: -1 }),
   ]);
 
   res.status(200).json({
