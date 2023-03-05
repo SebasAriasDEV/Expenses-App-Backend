@@ -4,11 +4,14 @@ import { ICustomRequest } from "../config/definitions";
 import { transactionModel as Transaction } from "../models/transaction.model";
 import { accountModel as Account } from "../models/account.model";
 
-//********** GET - GET ALL TRANSACTIONS */
+//********** GET - GET ALL TRANSACTIONS FROM AUTHENTICATED USER */
 const getAllTransactions = async (req: Request, res: Response) => {
+  //Get autheticated user
+  const authID = (req as ICustomRequest).authenticatedUser.id;
+
   const resp = await Promise.all([
-    Transaction.countDocuments(),
-    Transaction.find(),
+    Transaction.countDocuments({ user: authID }),
+    Transaction.find({ user: authID }),
   ]);
 
   res.status(200).json({
