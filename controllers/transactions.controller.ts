@@ -10,8 +10,11 @@ const getAllTransactions = async (req: Request, res: Response) => {
   const authID = (req as ICustomRequest).authenticatedUser.id;
 
   const resp = await Promise.all([
-    Transaction.countDocuments({ user: authID }),
-    Transaction.find({ user: authID }).sort({ date: -1 }),
+    Transaction.countDocuments({ user: authID, ...req.query }),
+    Transaction.find({ user: authID, ...req.query })
+      .sort({ date: -1 })
+      .populate("account")
+      .populate("category"),
   ]);
 
   res.status(200).json({

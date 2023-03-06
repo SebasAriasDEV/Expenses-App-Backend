@@ -27,6 +27,7 @@ router.post(
     check("year", "Year is required").notEmpty(),
     check("account", "TransactionType is required").notEmpty(),
     check("category", "TransactionType is required").notEmpty(),
+    //TODO: Check de que el category y account existan antes de crearlo
     validateFields,
   ],
   createTransaction
