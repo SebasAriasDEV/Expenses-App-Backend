@@ -14,6 +14,7 @@ const getAllTransactions = async (req: Request, res: Response) => {
     Transaction.find({ user: authID, ...req.query })
       .sort({ date: -1 })
       .populate("account")
+      .populate("user", "-password -__v")
       .populate("category"),
   ]);
 
