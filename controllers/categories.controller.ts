@@ -4,13 +4,12 @@ import { categoryModel as Category } from "../models/category.model";
 
 //********** GET - GET ALL CATEGORIES FROM AUTHENTICATED USER */
 const getAllCategories = async (req: Request, res: Response) => {
-
   //Get authenticated user
   const userID = (req as ICustomRequest).authenticatedUser.id;
 
   const resp = await Promise.all([
     Category.countDocuments({ user: userID, ...req.query }),
-    Category.find({ user: userID, ...req.query}),
+    Category.find({ user: userID, ...req.query }),
   ]);
 
   res.status(200).json({
@@ -28,7 +27,7 @@ const createCategory = async (req: Request, res: Response) => {
 
   const newCategory = new Category({
     name,
-    monthlyBudget,
+    monthlyBudget: monthlyBudget * -1,
     month,
     year,
     user: authID,

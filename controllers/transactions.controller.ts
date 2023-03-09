@@ -36,10 +36,11 @@ const createTransaction = async (req: Request, res: Response) => {
   } = req.body;
 
   const transactionDate = new Date(date);
+  const realAmount = transactionType === 'Income'? amount : amount *-1 ;
   //Create transaction to be saved
   const transaction = new Transaction({
     transactionType,
-    amount,
+    amount: realAmount,
     date: transactionDate,
     description,
     month: transactionDate.getMonth()+1,
