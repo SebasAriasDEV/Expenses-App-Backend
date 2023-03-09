@@ -23,8 +23,9 @@ router.post(
     check("transactionType", "TransactionType is required").notEmpty(),
     check("amount", "Amount is required").notEmpty(),
     check("description", "Description is required").notEmpty(),
-    check("month", "Month is required").notEmpty(),
-    check("year", "Year is required").notEmpty(),
+    check('date','Date of the transaction is required').isDate(),
+    // check("month", "Month is required").notEmpty(),
+    // check("year", "Year is required").notEmpty(),
     check("account", "TransactionType is required").notEmpty(),
     check("category", "TransactionType is required").notEmpty(),
     //TODO: Check de que el category y account existan antes de crearlo

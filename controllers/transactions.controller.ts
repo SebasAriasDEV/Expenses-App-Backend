@@ -29,22 +29,21 @@ const createTransaction = async (req: Request, res: Response) => {
   const {
     transactionType,
     amount,
-    date = new Date(),
+    date,
     description,
     account,
     category,
-    month,
-    year,
   } = req.body;
 
-  //Create transaction to be saves
+  const transactionDate = new Date(date);
+  //Create transaction to be saved
   const transaction = new Transaction({
     transactionType,
     amount,
-    date,
+    date: transactionDate,
     description,
-    month,
-    year,
+    month: transactionDate.getMonth()+1,
+    year: transactionDate.getFullYear(),
     user: (req as ICustomRequest).authenticatedUser.id,
     account,
     category,
