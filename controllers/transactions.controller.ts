@@ -53,7 +53,7 @@ const createTransaction = async (req: Request, res: Response) => {
   //Update account balance with new transaction
   //TODO: Validar que el account/category que vienen por parametro existan
   const currentAccount = await Account.findById(account);
-  const newBalance = currentAccount!.balance + amount;
+  const newBalance = currentAccount!.balance + realAmount;
   await Account.findByIdAndUpdate(account, { balance: newBalance });
 
   //Save new transaction
