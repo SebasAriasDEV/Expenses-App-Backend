@@ -14,7 +14,18 @@ import { validateJWT } from "../middlewares/validate_jwt";
 const router = Router();
 
 //********** GET - GET ALL ACCOUNTS */
-router.get("/", [validateJWT], getAllAccounts);
+router.get(
+  "/",
+  [
+    validateJWT,
+    check(
+      "displayCurrency",
+      "DisplayCurrency to be displayed is required (COP or EUR)."
+    ).isIn(["COP", "EUR"]),
+    validateFields,
+  ],
+  getAllAccounts
+);
 
 //********** POST - CREATE A NEW ACCOUNT */
 router.post(
