@@ -18,7 +18,7 @@ router.get("/", [validateJWT], usersGet);
 router.post(
   "/",
   [
-    validateJWT,
+    //validateJWT,
     check("firstName", "First name is mandatory").notEmpty(),
     check("lastName", "Last name is mandatory").notEmpty(),
     check("password", "Password must have at least 6 characters")
