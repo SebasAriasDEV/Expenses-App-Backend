@@ -23,6 +23,10 @@ const categorySchema = new Schema({
     ref: "User",
     required: [true, "User is required"],
   },
+  currency: {
+    type: String,
+    required: [true, "Budget currency is required"],
+  },
 });
 
 categorySchema.methods.toJSON = function () {

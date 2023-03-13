@@ -25,6 +25,7 @@ router.post(
     check("monthlyBudget", "Category monthly budget is mandatory").notEmpty(),
     check("month", "Month is mandatory").notEmpty(),
     check("year", "Year is mandatory").notEmpty(),
+    check("currency", "Currency is mandatory").notEmpty(),
     validateFields,
   ],
   createCategory

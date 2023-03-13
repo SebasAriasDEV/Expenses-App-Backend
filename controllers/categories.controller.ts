@@ -20,7 +20,7 @@ const getAllCategories = async (req: Request, res: Response) => {
 
 //********** POST - CREATE A NEW CATEGORY */
 const createCategory = async (req: Request, res: Response) => {
-  const { name, monthlyBudget, month, year } = req.body;
+  const { name, monthlyBudget, month, year, currency } = req.body;
 
   //Get authenticated user
   const authID = (req as ICustomRequest).authenticatedUser.id;
@@ -31,6 +31,7 @@ const createCategory = async (req: Request, res: Response) => {
     month,
     year,
     user: authID,
+    currency,
   });
 
   //Create category in Mongo
