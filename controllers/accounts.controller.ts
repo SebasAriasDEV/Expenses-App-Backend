@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { ICustomRequest } from "../config/definitions";
 
 import { accountModel as Account } from "../models/account.model";
+import { transactionModel as Transaction } from "../models/transaction.model";
 
 //********** GET - GET ALL ACCOUNTS OF AUTHENTICATED USER */
 const getAllAccounts = async (req: Request, res: Response) => {
@@ -58,10 +59,20 @@ const createAccount = async (req: Request, res: Response) => {
 const deleteAccount = async (req: Request, res: Response) => {
   const { id } = req.params;
 
+  //Delete all the transactions linked to the deleted account
+  const accountTransactions = await Transaction.find({ account: id});
+  accountTransactions.forEach( async (tran) => {
+    await Transaction.findByIdAndDelete( tran._id );
+  });
+  console.log( accountTransactions);
+  
+
+  //Delete the account
   const account = await Account.findByIdAndDelete(id);
 
   res.status(200).json({
     msg: "Account has been deleted",
+    transactions_deleted: accountTransactions.length,
     account,
   });
 };
