@@ -13,7 +13,7 @@ This app is intended for people who need to manage their personal finances on a 
 Front-end of the project can be found here [iBudget Front-end](https://github.com/SebasAriasDEV/Expenses-App-Frontend).
 
 
-## Technologies used in Front-End
+## Technologies used in Back-End
 
 - Typescript
 - Node JS (Runtime)
